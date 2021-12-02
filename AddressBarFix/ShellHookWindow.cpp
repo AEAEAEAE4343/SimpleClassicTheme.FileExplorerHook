@@ -175,15 +175,24 @@ LRESULT CALLBACK HookWndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lPar
             // Add Client Edge to the folder view and the tree view (the navigation pane)
             if (ClientEdge)
             {
+                /*HWND FolderView = GetChildWindow((HWND)lParam, L"FolderView", 1);
+                LONG FolderViewExtendedStyle = GetWindowLongPtrW(FolderView, GWL_EXSTYLE);
+                FolderViewExtendedStyle |= WS_EX_CLIENTEDGE;
+                SetWindowLongPtrW(FolderView, GWL_EXSTYLE, FolderViewExtendedStyle);*/
+
+                HWND SysListView = GetChildWindow((HWND)lParam, L"SHELLDLL_DefView", 1);
+                LONG SysListViewExtendedStyle = GetWindowLongPtrW(SysListView, GWL_EXSTYLE);
+                SysListViewExtendedStyle |= WS_EX_CLIENTEDGE;
+                SetWindowLongPtrW(SysListView, GWL_EXSTYLE, SysListViewExtendedStyle);
+
+                GetWindowRect(SysListView, &rect);
+                SetWindowPos(SysListView, NULL, NULL, NULL, rect.right - rect.left + 1, rect.bottom - rect.top, SWP_NOMOVE | SWP_NOZORDER | SWP_DEFERERASE);
+                SetWindowPos(SysListView, NULL, NULL, NULL, rect.right - rect.left, rect.bottom - rect.top, SWP_NOMOVE | SWP_NOZORDER | SWP_DEFERERASE);
+
                 HWND TreeView = GetChildWindow((HWND)lParam, L"SysTreeView32", 1);
                 LONG TreeViewExtendedStyle = GetWindowLongPtrW(TreeView, GWL_EXSTYLE);
                 TreeViewExtendedStyle |= WS_EX_CLIENTEDGE;
                 SetWindowLongPtrW(TreeView, GWL_EXSTYLE, TreeViewExtendedStyle);
-
-                HWND FolderView = GetChildWindow((HWND)lParam, L"FolderView", 1);
-                LONG FolderViewExtendedStyle = GetWindowLongPtrW(FolderView, GWL_EXSTYLE);
-                FolderViewExtendedStyle |= WS_EX_CLIENTEDGE;
-                SetWindowLongPtrW(FolderView, GWL_EXSTYLE, FolderViewExtendedStyle);
             }
 
             // Add borders to the outside of the Rebar and in between the bands

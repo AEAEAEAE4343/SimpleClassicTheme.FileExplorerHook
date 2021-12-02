@@ -4,7 +4,7 @@
 #include <windows.h>
 #include "OptionsWindow.h"
 
-INT_PTR OptionsDlgProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
+INT_PTR CALLBACK OptionsDlgProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
 
 BOOL ClientEdge = 0;
 BOOL RebarBorders = 0;
@@ -100,7 +100,7 @@ void LoadOptionsDlg(HWND hWndDlg)
 	SendDlgItemMessageW(hWndDlg, IDC_CHECK_ADDBAR_PATH, BM_SETCHECK, AddressBarAddPath, 0);
 }
 
-INT_PTR OptionsDlgProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
+INT_PTR CALLBACK OptionsDlgProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
 	switch (message)
 	{
